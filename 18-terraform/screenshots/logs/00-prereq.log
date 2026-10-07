@@ -1,0 +1,11 @@
+Terraform v1.13.4
+on linux_amd64
++ provider registry.terraform.io/hashicorp/aws v6.66.0
+
+Your version of Terraform is out of date! The latest version
+is 1.16.5. You can update by downloading from https://developer.hashicorp.com/terraform/install
+{
+    "UserId": "AIDAZ4UI35TZ5YZZYBYCH",
+    "Account": "679965617395",
+    "Arn": "arn:aws:iam::679965617395:user/terraform-demo"
+}

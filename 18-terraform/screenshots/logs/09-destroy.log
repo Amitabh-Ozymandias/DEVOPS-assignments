@@ -1,0 +1,110 @@
+[0m[1maws_s3_bucket.demo: Refreshing state... [id=yatri1107-session18-tf-demo][0m
+[0m[1maws_s3_bucket_versioning.demo: Refreshing state... [id=yatri1107-session18-tf-demo][0m
+[0m[1maws_s3_bucket_public_access_block.demo: Refreshing state... [id=yatri1107-session18-tf-demo][0m
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  [31m-[0m destroy[0m
+
+Terraform will perform the following actions:
+
+[1m  # aws_s3_bucket.demo[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_s3_bucket" "demo" {
+      [31m-[0m[0m arn                         = "arn:aws:s3:::yatri1107-session18-tf-demo" [90m-> null[0m[0m
+      [31m-[0m[0m bucket                      = "yatri1107-session18-tf-demo" [90m-> null[0m[0m
+      [31m-[0m[0m bucket_domain_name          = "yatri1107-session18-tf-demo.s3.amazonaws.com" [90m-> null[0m[0m
+      [31m-[0m[0m bucket_namespace            = "global" [90m-> null[0m[0m
+      [31m-[0m[0m bucket_region               = "ap-southeast-2" [90m-> null[0m[0m
+      [31m-[0m[0m bucket_regional_domain_name = "yatri1107-session18-tf-demo.s3.ap-southeast-2.amazonaws.com" [90m-> null[0m[0m
+      [31m-[0m[0m force_destroy               = true [90m-> null[0m[0m
+      [31m-[0m[0m hosted_zone_id              = "Z1WCIGYICN2BYD" [90m-> null[0m[0m
+      [31m-[0m[0m id                          = "yatri1107-session18-tf-demo" [90m-> null[0m[0m
+      [31m-[0m[0m object_lock_enabled         = false [90m-> null[0m[0m
+      [31m-[0m[0m region                      = "ap-southeast-2" [90m-> null[0m[0m
+      [31m-[0m[0m request_payer               = "BucketOwner" [90m-> null[0m[0m
+      [31m-[0m[0m tags                        = {
+          [31m-[0m[0m "Environment" = "dev"
+          [31m-[0m[0m "ManagedBy"   = "Terraform"
+          [31m-[0m[0m "Name"        = "yatri1107-session18-tf-demo"
+          [31m-[0m[0m "Project"     = "Session18"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m tags_all                    = {
+          [31m-[0m[0m "Environment" = "dev"
+          [31m-[0m[0m "ManagedBy"   = "Terraform"
+          [31m-[0m[0m "Name"        = "yatri1107-session18-tf-demo"
+          [31m-[0m[0m "Project"     = "Session18"
+        } [90m-> null[0m[0m
+        [90m# (3 unchanged attributes hidden)[0m[0m
+
+      [31m-[0m[0m grant {
+          [31m-[0m[0m id          = "bb32100522bac2f05c0d99e5c394ff6f64b3f6784bdf26145ef5bd8c624c09e0" [90m-> null[0m[0m
+          [31m-[0m[0m permissions = [
+              [31m-[0m[0m "FULL_CONTROL",
+            ] [90m-> null[0m[0m
+          [31m-[0m[0m type        = "CanonicalUser" [90m-> null[0m[0m
+            [90m# (1 unchanged attribute hidden)[0m[0m
+        }
+
+      [31m-[0m[0m server_side_encryption_configuration {
+          [31m-[0m[0m rule {
+              [31m-[0m[0m bucket_key_enabled = false [90m-> null[0m[0m
+
+              [31m-[0m[0m apply_server_side_encryption_by_default {
+                  [31m-[0m[0m sse_algorithm     = "AES256" [90m-> null[0m[0m
+                    [90m# (1 unchanged attribute hidden)[0m[0m
+                }
+            }
+        }
+
+      [31m-[0m[0m versioning {
+          [31m-[0m[0m enabled    = true [90m-> null[0m[0m
+          [31m-[0m[0m mfa_delete = false [90m-> null[0m[0m
+        }
+    }
+
+[1m  # aws_s3_bucket_public_access_block.demo[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_s3_bucket_public_access_block" "demo" {
+      [31m-[0m[0m block_public_acls       = true [90m-> null[0m[0m
+      [31m-[0m[0m block_public_policy     = true [90m-> null[0m[0m
+      [31m-[0m[0m bucket                  = "yatri1107-session18-tf-demo" [90m-> null[0m[0m
+      [31m-[0m[0m id                      = "yatri1107-session18-tf-demo" [90m-> null[0m[0m
+      [31m-[0m[0m ignore_public_acls      = true [90m-> null[0m[0m
+      [31m-[0m[0m region                  = "ap-southeast-2" [90m-> null[0m[0m
+      [31m-[0m[0m restrict_public_buckets = true [90m-> null[0m[0m
+    }
+
+[1m  # aws_s3_bucket_versioning.demo[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_s3_bucket_versioning" "demo" {
+      [31m-[0m[0m bucket                = "yatri1107-session18-tf-demo" [90m-> null[0m[0m
+      [31m-[0m[0m id                    = "yatri1107-session18-tf-demo" [90m-> null[0m[0m
+      [31m-[0m[0m region                = "ap-southeast-2" [90m-> null[0m[0m
+        [90m# (1 unchanged attribute hidden)[0m[0m
+
+      [31m-[0m[0m versioning_configuration {
+          [31m-[0m[0m mfa_delete = "Disabled" [90m-> null[0m[0m
+          [31m-[0m[0m status     = "Enabled" [90m-> null[0m[0m
+        }
+    }
+
+[1mPlan:[0m 0 to add, 0 to change, 3 to destroy.
+[0m
+Changes to Outputs:
+  [31m-[0m[0m bucket_arn        = "arn:aws:s3:::yatri1107-session18-tf-demo" [90m-> null[0m[0m
+  [31m-[0m[0m bucket_name       = "yatri1107-session18-tf-demo" [90m-> null[0m[0m
+  [31m-[0m[0m bucket_region     = "ap-southeast-2" [90m-> null[0m[0m
+  [31m-[0m[0m versioning_status = "Enabled" [90m-> null[0m[0m
+[0m[1m
+Do you really want to destroy all resources?[0m
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  [1mEnter a value:[0m [0m
+[0m[1maws_s3_bucket_public_access_block.demo: Destroying... [id=yatri1107-session18-tf-demo][0m[0m
+[0m[1maws_s3_bucket_versioning.demo: Destroying... [id=yatri1107-session18-tf-demo][0m[0m
+[0m[1maws_s3_bucket_public_access_block.demo: Destruction complete after 7s[0m
+[0m[1maws_s3_bucket_versioning.demo: Destruction complete after 7s[0m
+[0m[1maws_s3_bucket.demo: Destroying... [id=yatri1107-session18-tf-demo][0m[0m
+[0m[1maws_s3_bucket.demo: Destruction complete after 1s[0m
+[0m[1m[32m
+Destroy complete! Resources: 3 destroyed.
+[0m

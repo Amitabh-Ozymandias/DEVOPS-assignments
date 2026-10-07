@@ -1,0 +1,87 @@
+# aws_s3_bucket.demo:
+resource "aws_s3_bucket" "demo" {
+    acceleration_status         = [90mnull[0m[0m
+    arn                         = "arn:aws:s3:::yatri1107-session18-tf-demo"
+    bucket                      = "yatri1107-session18-tf-demo"
+    bucket_domain_name          = "yatri1107-session18-tf-demo.s3.amazonaws.com"
+    bucket_namespace            = "global"
+    bucket_prefix               = [90mnull[0m[0m
+    bucket_region               = "ap-southeast-2"
+    bucket_regional_domain_name = "yatri1107-session18-tf-demo.s3.ap-southeast-2.amazonaws.com"
+    force_destroy               = true
+    hosted_zone_id              = "Z1WCIGYICN2BYD"
+    id                          = "yatri1107-session18-tf-demo"
+    object_lock_enabled         = false
+    policy                      = [90mnull[0m[0m
+    region                      = "ap-southeast-2"
+    request_payer               = "BucketOwner"
+    tags                        = {
+        "Environment" = "dev"
+        "ManagedBy"   = "Terraform"
+        "Name"        = "yatri1107-session18-tf-demo"
+        "Project"     = "Session18"
+    }
+    tags_all                    = {
+        "Environment" = "dev"
+        "ManagedBy"   = "Terraform"
+        "Name"        = "yatri1107-session18-tf-demo"
+        "Project"     = "Session18"
+    }
+
+    grant {
+        id          = "bb32100522bac2f05c0d99e5c394ff6f64b3f6784bdf26145ef5bd8c624c09e0"
+        permissions = [
+            "FULL_CONTROL",
+        ]
+        type        = "CanonicalUser"
+        uri         = [90mnull[0m[0m
+    }
+
+    server_side_encryption_configuration {
+        rule {
+            bucket_key_enabled = false
+
+            apply_server_side_encryption_by_default {
+                kms_master_key_id = [90mnull[0m[0m
+                sse_algorithm     = "AES256"
+            }
+        }
+    }
+
+    versioning {
+        enabled    = false
+        mfa_delete = false
+    }
+}
+
+# aws_s3_bucket_public_access_block.demo:
+resource "aws_s3_bucket_public_access_block" "demo" {
+    block_public_acls       = true
+    block_public_policy     = true
+    bucket                  = "yatri1107-session18-tf-demo"
+    id                      = "yatri1107-session18-tf-demo"
+    ignore_public_acls      = true
+    region                  = "ap-southeast-2"
+    restrict_public_buckets = true
+}
+
+# aws_s3_bucket_versioning.demo:
+resource "aws_s3_bucket_versioning" "demo" {
+    bucket                = "yatri1107-session18-tf-demo"
+    expected_bucket_owner = [90mnull[0m[0m
+    id                    = "yatri1107-session18-tf-demo"
+    region                = "ap-southeast-2"
+
+    versioning_configuration {
+        mfa_delete = "Disabled"
+        status     = "Enabled"
+    }
+}
+
+
+Outputs:
+
+bucket_arn = "arn:aws:s3:::yatri1107-session18-tf-demo"
+bucket_name = "yatri1107-session18-tf-demo"
+bucket_region = "ap-southeast-2"
+versioning_status = "Enabled"

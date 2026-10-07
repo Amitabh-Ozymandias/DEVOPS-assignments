@@ -1,0 +1,4 @@
+bucket_arn = "arn:aws:s3:::yatri1107-session18-tf-demo"
+bucket_name = "yatri1107-session18-tf-demo"
+bucket_region = "ap-southeast-2"
+versioning_status = "Enabled"
