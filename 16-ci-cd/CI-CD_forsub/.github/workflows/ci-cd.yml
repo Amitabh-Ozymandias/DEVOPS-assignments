@@ -1,0 +1,111 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  # --- JOB 1: TEST (CI) ---
+  test:
+    name: Run Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Pytest
+        run: pytest -v
+
+  # --- JOB 2: SECURITY SCAN (CI) ---
+  security-check:
+    name: Security Scan
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Check for Sensitive Files
+        run: |
+          echo "Scanning for sensitive credentials..."
+          if find . -type f \( -name ".env" -o -name "*.pem" -o -name "*.key" \) | grep -q .; then
+            echo "Security check failed: Sensitive file detected!"
+            exit 1
+          fi
+          echo "Security scan clean."
+
+  # --- JOB 3: BUILD & ARTIFACT (CI) ---
+  build:
+    name: Build & Package Artifact
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Execute Build Script
+        run: |
+          chmod +x build.sh
+          ./build.sh
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: calculator-build-artifact
+          path: build/
+          retention-days: 7
+
+  # --- JOB 4: DOCKER CONTAINER DEPLOYMENT (CD) ---
+  deploy-docker:
+    name: Build & Push Docker Image (CD)
+    needs: [build, security-check]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Check Docker Hub Credentials
+        id: docker_auth
+        run: |
+          if [ -n "${{ secrets.DOCKERHUB_USERNAME }}" ] && [ -n "${{ secrets.DOCKERHUB_TOKEN }}" ]; then
+            echo "has_credentials=true" >> $GITHUB_OUTPUT
+            echo "push=true" >> $GITHUB_OUTPUT
+            echo "tags=${{ secrets.DOCKERHUB_USERNAME }}/calculator-app:latest,${{ secrets.DOCKERHUB_USERNAME }}/calculator-app:${{ github.sha }}" >> $GITHUB_OUTPUT
+          else
+            echo "has_credentials=false" >> $GITHUB_OUTPUT
+            echo "push=false" >> $GITHUB_OUTPUT
+            echo "tags=calculator-app:latest,calculator-app:local" >> $GITHUB_OUTPUT
+            echo "::notice::Docker Hub secrets not set. Building image locally to validate build."
+          fi
+
+      - name: Log in to Docker Hub
+        if: steps.docker_auth.outputs.has_credentials == 'true'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          load: ${{ steps.docker_auth.outputs.push != 'true' }}
+          push: ${{ steps.docker_auth.outputs.push == 'true' }}
+          tags: ${{ steps.docker_auth.outputs.tags }}
